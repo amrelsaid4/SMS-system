@@ -1,0 +1,60 @@
+CREATE DATABASE mainDB;
+USE mainDB;
+CREATE TABLE student (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(100) NOT NULL,
+  arabic INT DEFAULT 0 CHECK (arabic BETWEEN 0 AND 100),
+  english INT DEFAULT 0 CHECK (english BETWEEN 0 AND 100),
+  french INT DEFAULT 0 CHECK (french BETWEEN 0 AND 100),
+  physics INT DEFAULT 0 CHECK (physics BETWEEN 0 AND 100),
+  math INT DEFAULT 0 CHECK (math BETWEEN 0 AND 100),
+  computer INT DEFAULT 0 CHECK (computer BETWEEN 0 AND 100),
+  total INT AS (arabic + english + french + physics + math + computer),
+  level VARCHAR(15) DEFAULT "first"
+);
+INSERT INTO student (name,arabic,english,french,physics,math,computer,level)
+	VALUES	("kamal sayed"      ,100,100,100,100,100,100,"second"),
+		    ("lotfy shalaan"    ,50 ,50 ,50 ,50 ,50 ,50 ,"third"),
+            ("saeed arafa"      ,0  ,0  ,0  ,0  ,0  ,0  ,"fourth"),
+            ("adel abdelsalam"  ,90 ,80 ,70 ,35 ,16 ,99 ,"fourth");
+CREATE TABLE teacher (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(100) NOT NULL,
+  salary DECIMAL(10,2) NOT NULL CHECK (salary > 0),
+  subject VARCHAR(100)
+);
+INSERT INTO teacher (name, salary, subject)
+    VALUES  ("ahmed hagag"      , 35000 ,   "math"),
+            ("mayada mostafa"   , 35000 ,   "physics"),
+            ("mahmoud basuoni"  , 35000 ,   "computer"),
+            ("ashraf shewail"   , 35000 ,   "arabic"),
+            ("ebrahim ryad"     , 15000 ,   "english");
+CREATE TABLE exam (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  teacher_name VARCHAR(100) NOT NULL,
+  subject VARCHAR(100) NOT NULL,
+  date VARCHAR(100) NOT NULL,
+  is_mandatory BOOL NOT NULL DEFAULT TRUE
+);
+INSERT INTO exam (teacher_name,subject,date,is_mandatory)
+	values  ("hamada nail"  ,"english"  ,"2022-7-18",false),
+		    ("ahmed hassan" ,"computer" ,"2018-5-6" ,true),
+            ("shaima ismail","physics"  ,"1999-3-24",true),
+            ("mai kamal"    ,"french"   ,"1997-3-13",false);
+CREATE TABLE budget(
+  inCome INT DEFAULT 0,
+  outCome INT DEFAULT 0,
+  note VARCHAR(100) DEFAULT "",
+  profit INT AS (inCome - outCome)
+);
+INSERT INTO budget (inCome,outCome,note)
+    values  (1000   ,100    ,"students and fixing"),
+            (4500   ,350    ,"scholarship and fees");
+CREATE TABLE attendance(
+  id INT PRIMARY KEY,
+  name VARCHAR(100),
+  status VARCHAR(100)
+);
+INSERT INTO attendance (id,name,status)
+    values  (1000   ,"Mohamed Eslam"    ,"present"),
+            (4500   ,"Mohamed Ashraf"   ,"absent");
